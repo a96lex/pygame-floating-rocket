@@ -1,7 +1,8 @@
 import pygame
-from helpers import colors
+from helpers import colors, physics
 from player import Player
 from stars import Stars
+from pipe import Pipe
 import numpy as np
 
 
@@ -13,7 +14,15 @@ win = pygame.display.set_mode((screen_width, screen_height))
 
 run = True
 
+n_pipes = 3
+
 player = Player(win)
+pipes = [Pipe(win) for i in range(n_pipes)]
+
+for i in range(n_pipes):
+    pipes[i].rect1.x += i * screen_width / (n_pipes)
+    pipes[i].rect2.x += i * screen_width / (n_pipes)
+
 stars = Stars(surface=win, star_count=500, star_movement=[1, 0])
 
 # update star velocity at random (for testing)
@@ -28,6 +37,15 @@ while run:
             run = False
 
     stars.update_and_draw(win)
+    collided = False
+    for pipe in pipes:
+        pipe.update_and_draw(win)
+        if physics.check_collision(player, pipe):
+            player.color = colors.FIRE
+            collided = True
+    if not collided:
+        player.color = colors.LIGHT
+
     player.draw(win)
     player.update()
     pygame.display.update()
