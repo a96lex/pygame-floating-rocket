@@ -2,7 +2,7 @@ import pygame
 from helpers import colors
 
 
-class Player(object):
+class Player(pygame.sprite.Sprite):
     def __init__(self, surface):
         self.bounds = surface.get_size()
         self.width, self.height = 40, 100
@@ -14,6 +14,7 @@ class Player(object):
         self.max_speed_y = 40
         self.max_speed_x = 40
         self.going_up = False
+        self.color = colors.LIGHT
 
     def handle_keys(self):
         key = pygame.key.get_pressed()
@@ -59,14 +60,15 @@ class Player(object):
         ):
             self.vel_x = -self.vel_x * 0.4
 
-        # for debugging positions
-        print(f"pos: {self.rect.y}, vel: {self.vel_y}, dist: {delta_y}", end="\r")
-
         # move :)
         self.rect.move_ip((self.vel_x, self.vel_y))
 
+    def invert(self):
+        self.vel_x = -self.vel_x * 0.8
+        self.vel_y = -self.vel_y * 0.8
+
     def draw(self, surface):
-        pygame.draw.rect(surface, colors.LIGHT, self.rect)
+        pygame.draw.rect(surface, self.color, self.rect)
         if self.going_up:
             pygame.draw.rect(
                 surface,
