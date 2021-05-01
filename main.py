@@ -2,6 +2,7 @@ import pygame
 from helpers import colors
 from player import Player
 from stars import Stars
+import numpy as np
 
 
 pygame.init()
@@ -13,11 +14,11 @@ win = pygame.display.set_mode((screen_width, screen_height))
 run = True
 
 player = Player(win)
-close_stars = Stars(surface=win, star_count=100, star_movement=[1, 0], star_size=4)
-intermediate_stars = Stars(
-    surface=win, star_count=200, star_movement=[0.7, 0], star_size=3
-)
-far_stars = Stars(surface=win, star_count=300, star_movement=[0.4, 0], star_size=2)
+stars = Stars(surface=win, star_count=500, star_movement=[1, 0])
+
+# update star velocity at random (for testing)
+new_star_vel = [np.random.random() - 0.5, np.random.random() - 0.5]
+stars.change_star_movement(star_movement=new_star_vel)
 
 while run:
     win.fill(colors.BG)
@@ -26,9 +27,7 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
-    far_stars.update_and_draw(win)
-    intermediate_stars.update_and_draw(win)
-    close_stars.update_and_draw(win)
+    stars.update_and_draw(win)
     player.draw(win)
     player.update()
     pygame.display.update()
