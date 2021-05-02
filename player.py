@@ -53,12 +53,15 @@ class Player(pygame.sprite.Sprite):
         if self.vel_x > self.max_speed_x:
             self.vel_x = self.max_speed_x
 
-        # bounce horizontally (elastic)
+        # bounce (elastic)
         if (
             self.rect.x + self.vel_x + self.width > self.bounds[0]
             or self.rect.x + self.vel_x < 0
         ):
             self.vel_x = -self.vel_x * 0.4
+
+        if self.rect.y + self.vel_y + 40 < 0:
+            self.vel_y = -self.vel_y * 0.4
 
         # move :)
         self.rect.move_ip((self.vel_x, self.vel_y))
