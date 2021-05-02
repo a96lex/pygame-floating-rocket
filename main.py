@@ -26,6 +26,8 @@ win = pygame.display.set_mode((screen_width, screen_height))
 
 run = True
 
+stars = Stars(surface=win, star_count=1000, star_movement=[-2, 0.1])
+
 
 def init_game():
     pipe_gap = 350
@@ -44,11 +46,9 @@ def init_game():
         pipes[i].rect1.x += i * (screen_width + 100) / (n_pipes)
         pipes[i].rect2.x += i * (screen_width + 100) / (n_pipes)
 
-    stars = Stars(surface=win, star_count=1000, star_movement=[-2, 0.1])
-
     points = 0
 
-    return player, pipes, stars, points, pipe_gap, pipe_width, pipe_speed
+    return player, pipes, points, pipe_gap, pipe_width, pipe_speed
 
 
 def main_loop(points, pipe_gap, pipe_width, pipe_speed, clock_ticks):
@@ -101,7 +101,7 @@ def final_screen(points, highscore):
 
 is_main_loop = True
 
-player, pipes, stars, points, pipe_gap, pipe_width, pipe_speed = init_game()
+player, pipes, points, pipe_gap, pipe_width, pipe_speed = init_game()
 
 highscore = 0
 
@@ -122,7 +122,7 @@ while run:
 
         if key[pygame.K_r]:
             clock_ticks = pygame.time.get_ticks()
-            player, pipes, stars, points, pipe_gap, pipe_width, pipe_speed = init_game()
+            player, pipes, points, pipe_gap, pipe_width, pipe_speed = init_game()
             is_main_loop = True
 
     for event in pygame.event.get():
