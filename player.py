@@ -7,10 +7,10 @@ class Player(pygame.sprite.Sprite):
         self.bounds = surface.get_size()
         self.width, self.height = 40, 100
         self.rect = pygame.rect.Rect((10, 10, self.width, self.height))
-        self.delta_v = 5
+        self.delta_v = 3
         self.vel_x = 0
         self.vel_y = 0
-        self.gravity = 6
+        self.gravity = 9.81
         self.max_speed_y = 40
         self.max_speed_x = 40
         self.going_up = False
@@ -25,7 +25,7 @@ class Player(pygame.sprite.Sprite):
         if key[pygame.K_RIGHT]:
             self.vel_x += self.delta_v
         if key[pygame.K_UP]:
-            self.vel_y -= self.delta_v * 2
+            self.vel_y -= self.delta_v * 4
             self.going_up = True
 
     def update(self):
@@ -33,7 +33,7 @@ class Player(pygame.sprite.Sprite):
         self.handle_keys()
 
         # distance to bottom
-        delta_y = self.bounds[1] - self.rect.y - self.height * 1.3
+        delta_y = self.bounds[1] - self.rect.y - self.height
         if delta_y == 0:
             delta_y += 1
 
@@ -41,7 +41,7 @@ class Player(pygame.sprite.Sprite):
         self.vel_y *= 0.9
 
         # apply gravity + repulsion from floor
-        self.vel_y += self.gravity - 10000 / delta_y ** 2
+        self.vel_y += self.gravity - 1000 / delta_y
 
         # check max velocities
         if self.vel_y < -self.max_speed_y:
