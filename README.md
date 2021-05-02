@@ -1,6 +1,6 @@
 # pygame-floating-rocket
 
-Source code game
+Source code for the game
 
 ## How to play
 
