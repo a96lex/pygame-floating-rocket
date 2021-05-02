@@ -25,6 +25,3 @@ class Pipe(pygame.sprite.Sprite):
 
     def reset(self, surface, pipe_gap, pipe_width):
         self.__init__(surface, pipe_gap, pipe_width)
-
-    def __del__(self):
-        print("pipe deleted")
