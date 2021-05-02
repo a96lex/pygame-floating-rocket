@@ -1,8 +1,8 @@
 import pygame
 from helpers import colors, physics
-from player import Player
-from stars import Stars
-from pipe import Pipe
+from classes.player import Player
+from classes.stars import Stars
+from classes.pipe import Pipe
 import numpy as np
 
 
