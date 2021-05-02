@@ -16,17 +16,20 @@ run = True
 
 pipe_gap = 350
 pipe_width = 100
+pipe_speed = 10
 
 n_pipes = 2
 
 player = Player(win)
-pipes = [Pipe(win, pipe_gap, pipe_width) for i in range(n_pipes)]
+pipes = [
+    Pipe(surface=win, pipe_gap=pipe_gap, pipe_width=pipe_width) for i in range(n_pipes)
+]
 
 for i in range(n_pipes):
     pipes[i].rect1.x += i * (screen_width + 100) / (n_pipes)
     pipes[i].rect2.x += i * (screen_width + 100) / (n_pipes)
 
-stars = Stars(surface=win, star_count=500, star_movement=[-2, 0.1])
+stars = Stars(surface=win, star_count=1000, star_movement=[-2, 0.1])
 
 
 while run:
@@ -50,6 +53,8 @@ while run:
                 pipe_width -= 1.5
 
             pipe.reset(win, pipe_gap, pipe_width)
+
+    stars.star_movement = [-1, -0.005 * player.vel_y]
 
     if not collided:
         player.color = colors.LIGHT
