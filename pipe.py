@@ -4,9 +4,9 @@ import numpy as np
 
 
 class Pipe(pygame.sprite.Sprite):
-    def __init__(self, surface, pipe_gap):
+    def __init__(self, surface, pipe_gap, pipe_width):
         self.bounds = surface.get_size()
-        self.width = 100
+        self.width = pipe_width
         self.pipe_gap = pipe_gap
         height1 = np.random.randint(0, high=self.bounds[1] * 0.6)
         height2 = self.bounds[1] - height1 - self.pipe_gap
@@ -23,8 +23,8 @@ class Pipe(pygame.sprite.Sprite):
         pygame.draw.rect(surface, colors.LIGHT, self.rect1)
         pygame.draw.rect(surface, colors.LIGHT, self.rect2)
 
-    def reset(self, surface, pipe_gap):
-        self.__init__(surface, pipe_gap)
+    def reset(self, surface, pipe_gap, pipe_width):
+        self.__init__(surface, pipe_gap, pipe_width)
 
     def __del__(self):
         print("pipe deleted")
