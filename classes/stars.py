@@ -19,7 +19,7 @@ class Stars(pygame.sprite.Sprite):
         for star in self.pos:
             pygame.draw.rect(
                 surface,
-                colors.OUTLINE,
+                colors.STARS,
                 (int(star[0]), int(star[1]), star[2], star[2]),
             )
 

@@ -14,7 +14,7 @@ class Player(pygame.sprite.Sprite):
         self.max_speed_y = 40
         self.max_speed_x = 40
         self.going_up = False
-        self.color = colors.LIGHT
+        self.color = colors.PLAYER
 
     def handle_keys(self):
         key = pygame.key.get_pressed()

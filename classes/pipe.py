@@ -20,8 +20,8 @@ class Pipe(pygame.sprite.Sprite):
         self.rect1.x -= self.vel_x
         self.rect2.x -= self.vel_x
 
-        pygame.draw.rect(surface, colors.LIGHT, self.rect1)
-        pygame.draw.rect(surface, colors.LIGHT, self.rect2)
+        pygame.draw.rect(surface, colors.PIPE, self.rect1)
+        pygame.draw.rect(surface, colors.PIPE, self.rect2)
 
     def reset(self, surface, pipe_gap, pipe_width):
         self.__init__(surface, pipe_gap, pipe_width)

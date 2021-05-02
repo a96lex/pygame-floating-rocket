@@ -53,7 +53,7 @@ def init_game():
 
 def main_loop(points, pipe_gap, pipe_width, pipe_speed, clock_ticks):
     collided = False
-    win.fill(colors.BG)
+    win.fill(colors.BACKGROUND)
     pygame.time.delay(40)
     stars.update_and_draw(win)
     for pipe in pipes:
@@ -85,7 +85,7 @@ def main_loop(points, pipe_gap, pipe_width, pipe_speed, clock_ticks):
 
 def final_screen(points, highscore):
     stars.star_movement = [-0.2, -0]
-    win.fill(colors.BG)
+    win.fill(colors.BACKGROUND)
     stars.update_and_draw(win)
     texts = []
     texts.append(font_big.render(f"Final points: {int(points)}", 5, (255, 255, 255)))
