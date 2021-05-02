@@ -14,14 +14,16 @@ win = pygame.display.set_mode((screen_width, screen_height))
 
 run = True
 
+pipe_gap = 350
+
 n_pipes = 3
 
 player = Player(win)
-pipes = [Pipe(win) for i in range(n_pipes)]
+pipes = [Pipe(win, pipe_gap) for i in range(n_pipes)]
 
 for i in range(n_pipes):
-    pipes[i].rect1.x += i * screen_width / (n_pipes)
-    pipes[i].rect2.x += i * screen_width / (n_pipes)
+    pipes[i].rect1.x += i * (screen_width + 100) / (n_pipes)
+    pipes[i].rect2.x += i * (screen_width + 100) / (n_pipes)
 
 stars = Stars(surface=win, star_count=500, star_movement=[1, 0])
 
@@ -43,6 +45,11 @@ while run:
         if physics.check_collision(player, pipe):
             player.color = colors.FIRE
             collided = True
+        if pipe.rect1.x < 0 - pipe.width:
+            if pipe_gap > 200:
+                pipe_gap -= 5
+            pipe.reset(win, pipe_gap)
+
     if not collided:
         player.color = colors.LIGHT
 
