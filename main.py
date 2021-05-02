@@ -8,7 +8,10 @@ import numpy as np
 
 pygame.init()
 
-screen_width, screen_height = 1080, 720
+screen_width, screen_height = (
+    pygame.display.Info().current_w,
+    pygame.display.Info().current_h,
+)
 
 win = pygame.display.set_mode((screen_width, screen_height))
 
