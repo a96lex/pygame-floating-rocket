@@ -11,10 +11,14 @@ pygame.init()
 font = pygame.font.SysFont("ubuntu-mono", 35, True, False)
 font_big = pygame.font.SysFont("ubuntu-mono", 70, True, False)
 
-# screen_width, screen_height = (
-#     pygame.display.Info().current_w,
-#     pygame.display.Info().current_h,
-# )
+"""
+this is for full screen. However objects need to be adjusted to 
+current screen size which is not supported at the moment
+screen_width, screen_height = (
+    pygame.display.Info().current_w,
+    pygame.display.Info().current_h,
+)
+"""
 
 screen_width, screen_height = 1080, 720
 
