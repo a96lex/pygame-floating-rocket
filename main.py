@@ -32,7 +32,6 @@ stars = Stars(surface=win, star_count=1000, star_movement=[-2, 0.1])
 def init_game():
     pipe_gap = 350
     pipe_width = 100
-    pipe_speed = 10
 
     n_pipes = 2
 
@@ -48,10 +47,10 @@ def init_game():
 
     points = 0
 
-    return player, pipes, points, pipe_gap, pipe_width, pipe_speed
+    return player, pipes, points, pipe_gap, pipe_width
 
 
-def main_loop(points, pipe_gap, pipe_width, pipe_speed, clock_ticks):
+def main_loop(points, pipe_gap, pipe_width, clock_ticks):
     collided = False
     win.fill(colors.BACKGROUND)
     pygame.time.delay(40)
@@ -80,7 +79,7 @@ def main_loop(points, pipe_gap, pipe_width, pipe_speed, clock_ticks):
 
     player.update()
     pygame.display.update()
-    return points, pipe_gap, pipe_width, pipe_speed, collided
+    return points, pipe_gap, pipe_width, collided
 
 
 def final_screen(points, highscore):
@@ -101,7 +100,7 @@ def final_screen(points, highscore):
 
 is_main_loop = True
 
-player, pipes, points, pipe_gap, pipe_width, pipe_speed = init_game()
+player, pipes, points, pipe_gap, pipe_width = init_game()
 
 highscore = 0
 
@@ -109,8 +108,8 @@ clock_ticks = 0
 
 while run:
     if is_main_loop:
-        points, pipe_gap, pipe_width, pipe_speed, collided = main_loop(
-            points, pipe_gap, pipe_width, pipe_speed, clock_ticks
+        points, pipe_gap, pipe_width, collided = main_loop(
+            points, pipe_gap, pipe_width, clock_ticks
         )
         if collided:
             is_main_loop = False
