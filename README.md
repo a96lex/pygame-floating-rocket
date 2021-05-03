@@ -13,4 +13,4 @@ Source code for the game
 
 ## Compile to executable
 
-- Linux: You will need to use pyinstaller. Simply run the compile.sh script to generate a `linix_build` executable file
+- Linux: You will need to use pyinstaller. Simply run the `build_to_linux.sh` script to generate a `linix_build.x` executable file
