@@ -24,8 +24,6 @@ screen_width, screen_height = 1080, 720
 
 win = pygame.display.set_mode((screen_width, screen_height))
 
-run = True
-
 stars = Stars(surface=win, star_count=1000, star_movement=[-2, 0.1])
 
 
@@ -106,7 +104,7 @@ highscore = 0
 
 clock_ticks = 0
 
-while run:
+while True:
     if is_main_loop:
         points, pipe_gap, pipe_width, collided = main_loop(
             points, pipe_gap, pipe_width, clock_ticks
@@ -126,7 +124,7 @@ while run:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            run = False
+            break
 
 
 pygame.quit()
