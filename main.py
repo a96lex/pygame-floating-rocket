@@ -121,7 +121,7 @@ while run:
 
         if key[pygame.K_r]:
             clock_ticks = pygame.time.get_ticks()
-            player, pipes, points, pipe_gap, pipe_width, pipe_speed = init_game()
+            player, pipes, points, pipe_gap, pipe_width = init_game()
             is_main_loop = True
 
     for event in pygame.event.get():
