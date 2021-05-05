@@ -24,14 +24,24 @@ screen_width, screen_height = 1080, 720
 
 win = pygame.display.set_mode((screen_width, screen_height))
 
-stars = Stars(surface=win, star_count=1000, star_movement=[-2, 0.1])
+stars = []
+
+for i in range(6):
+    stars.append(
+        Stars(
+            surface=win,
+            star_count=250,
+            star_movement=[-(2 + i / 6), 0],
+            star_size=2 + i / 2.5,
+        )
+    )
 
 
 def init_game():
     pipe_gap = 350
     pipe_width = 100
 
-    n_pipes = 2
+    n_pipes = 5
 
     player = Player(win)
     pipes = [
@@ -52,7 +62,14 @@ def main_loop(points, pipe_gap, pipe_width, clock_ticks):
     collided = False
     win.fill(colors.BACKGROUND)
     pygame.time.delay(40)
-    stars.update_and_draw(win)
+
+    for star_layer in stars:
+        star_layer.update_and_draw(win)
+        star_layer.star_movement = [
+            star_layer.star_movement[0],
+            player.vel_y * 0.005 * star_layer.size,
+        ]
+
     for pipe in pipes:
         pipe.update_and_draw(win)
         if physics.check_collision(player, pipe):
@@ -65,8 +82,6 @@ def main_loop(points, pipe_gap, pipe_width, clock_ticks):
                 pipe_width -= 1.5
 
             pipe.reset(win, pipe_gap, pipe_width)
-
-    stars.star_movement = [-1, -0.005 * player.vel_y]
 
     points += (pygame.time.get_ticks() - clock_ticks) / 100000
 
@@ -83,7 +98,6 @@ def main_loop(points, pipe_gap, pipe_width, clock_ticks):
 def final_screen(points, highscore):
     stars.star_movement = [-0.2, -0]
     win.fill(colors.BACKGROUND)
-    stars.update_and_draw(win)
     texts = []
     texts.append(font_big.render(f"Final points: {int(points)}", 5, (255, 255, 255)))
     texts.append(font_big.render(f"Highscore: {int(highscore)}", 5, (255, 255, 255)))
