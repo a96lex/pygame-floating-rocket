@@ -1,9 +1,10 @@
 import pygame
+import numpy as np
+import sys
 from helpers import colors, physics
 from classes.player import Player
 from classes.stars import Stars
 from classes.pipe import Pipe
-import numpy as np
 
 
 pygame.init()
@@ -24,7 +25,19 @@ screen_width, screen_height = 1080, 720
 
 win = pygame.display.set_mode((screen_width, screen_height))
 
-stars = Stars(surface=win, star_count=1000, star_movement=[-2, 0.1])
+stars = []
+
+star_layers = 10
+
+for i in range(star_layers):
+    stars.append(
+        Stars(
+            surface=win,
+            star_count=int(1000 / star_layers),
+            star_movement=[-(2 + 2 * i / (star_layers)), 0],
+            star_size=2 + i * 2 / star_layers,
+        )
+    )
 
 
 def init_game():
@@ -51,22 +64,26 @@ def init_game():
 def main_loop(points, pipe_gap, pipe_width, clock_ticks):
     collided = False
     win.fill(colors.BACKGROUND)
-    pygame.time.delay(40)
-    stars.update_and_draw(win)
+
+    for star_layer in stars:
+        star_layer.update_and_draw(win)
+        star_layer.star_movement = [
+            star_layer.star_movement[0],
+            player.vel_y * 0.005 * star_layer.size,
+        ]
+
     for pipe in pipes:
         pipe.update_and_draw(win)
         if physics.check_collision(player, pipe):
             collided = True
 
         if pipe.rect1.x < 0 - pipe.width:
-            if pipe_gap > 160:
+            if pipe_gap > 130:
                 pipe_gap -= 5
             if pipe_width > 10:
                 pipe_width -= 1.5
 
             pipe.reset(win, pipe_gap, pipe_width)
-
-    stars.star_movement = [-1, -0.005 * player.vel_y]
 
     points += (pygame.time.get_ticks() - clock_ticks) / 100000
 
@@ -81,9 +98,15 @@ def main_loop(points, pipe_gap, pipe_width, clock_ticks):
 
 
 def final_screen(points, highscore):
-    stars.star_movement = [-0.2, -0]
     win.fill(colors.BACKGROUND)
-    stars.update_and_draw(win)
+
+    for star_layer in stars:
+        star_layer.update_and_draw(win)
+        star_layer.star_movement = [
+            star_layer.star_movement[0],
+            0,
+        ]
+
     texts = []
     texts.append(font_big.render(f"Final points: {int(points)}", 5, (255, 255, 255)))
     texts.append(font_big.render(f"Highscore: {int(highscore)}", 5, (255, 255, 255)))
@@ -105,6 +128,8 @@ highscore = 0
 clock_ticks = 0
 
 while True:
+    pygame.time.delay(40)
+
     if is_main_loop:
         points, pipe_gap, pipe_width, collided = main_loop(
             points, pipe_gap, pipe_width, clock_ticks
@@ -124,7 +149,8 @@ while True:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            break
+            pygame.quit()
+            sys.exit()
 
 
 pygame.quit()

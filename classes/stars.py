@@ -4,15 +4,12 @@ from helpers import colors
 
 
 class Stars(pygame.sprite.Sprite):
-    def __init__(self, surface, star_count, star_movement):
+    def __init__(self, surface, star_count, star_movement, star_size):
         self.bounds = surface.get_size()
         pos_x = np.random.random(size=star_count) * self.bounds[0]
         pos_y = np.random.random(size=star_count) * self.bounds[1]
-        sizes = np.random.random(size=star_count) * 4
-        self.pos = np.asanyarray(np.vstack((pos_x, pos_y, sizes)).T)
-        self.star_movement = star_movement
-
-    def change_star_movement(self, star_movement):
+        self.pos = np.vstack((pos_x, pos_y)).T
+        self.size = star_size
         self.star_movement = star_movement
 
     def update_and_draw(self, surface):
@@ -20,16 +17,15 @@ class Stars(pygame.sprite.Sprite):
             pygame.draw.rect(
                 surface,
                 colors.STARS,
-                (int(star[0]), int(star[1]), star[2], star[2]),
+                (int(star[0]), int(star[1]), self.size, self.size),
             )
 
-            star[0:2] += np.multiply(self.star_movement, star[2])
-
+            star += self.star_movement
             if star[0] > self.bounds[0]:
-                star[0] = 0 - star[2]
-            if star[0] < 0 - star[2]:
+                star[0] = 0 - self.size
+            if star[0] < 0 - self.size:
                 star[0] = self.bounds[0]
             if star[1] > self.bounds[1]:
-                star[1] = 0 - star[2]
-            if star[1] < 0 - star[2]:
+                star[1] = 0 - self.size
+            if star[1] < 0 - self.size:
                 star[1] = self.bounds[1]
