@@ -3,7 +3,7 @@ import numpy as np
 from helpers import colors
 
 
-class Stars(object):
+class Stars(pygame.sprite.Sprite):
     def __init__(self, surface, star_count, star_movement, star_size):
         self.bounds = surface.get_size()
         pos_x = np.random.random(size=star_count) * self.bounds[0]
