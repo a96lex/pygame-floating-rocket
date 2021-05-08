@@ -1,9 +1,10 @@
 import pygame
+import numpy as np
+import sys
 from helpers import colors, physics
 from classes.player import Player
 from classes.stars import Stars
 from classes.pipe import Pipe
-import numpy as np
 
 
 pygame.init()
@@ -126,9 +127,7 @@ highscore = 0
 
 clock_ticks = 0
 
-run = True
-
-while run:
+while True:
     pygame.time.delay(40)
 
     if is_main_loop:
@@ -150,7 +149,8 @@ while run:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            run = False
+            pygame.quit()
+            sys.exit()
 
 
 pygame.quit()
