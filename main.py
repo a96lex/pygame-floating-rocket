@@ -26,13 +26,15 @@ win = pygame.display.set_mode((screen_width, screen_height))
 
 stars = []
 
-for i in range(6):
+star_layers = 10
+
+for i in range(star_layers):
     stars.append(
         Stars(
             surface=win,
-            star_count=250,
-            star_movement=[-(2 + i / 6), 0],
-            star_size=2 + i / 2.5,
+            star_count=int(1000 / star_layers),
+            star_movement=[-(2 + 2 * i / (star_layers)), 0],
+            star_size=2 + i * 2 / star_layers,
         )
     )
 
@@ -41,7 +43,7 @@ def init_game():
     pipe_gap = 350
     pipe_width = 100
 
-    n_pipes = 5
+    n_pipes = 2
 
     player = Player(win)
     pipes = [
@@ -61,7 +63,6 @@ def init_game():
 def main_loop(points, pipe_gap, pipe_width, clock_ticks):
     collided = False
     win.fill(colors.BACKGROUND)
-    pygame.time.delay(40)
 
     for star_layer in stars:
         star_layer.update_and_draw(win)
@@ -76,7 +77,7 @@ def main_loop(points, pipe_gap, pipe_width, clock_ticks):
             collided = True
 
         if pipe.rect1.x < 0 - pipe.width:
-            if pipe_gap > 160:
+            if pipe_gap > 130:
                 pipe_gap -= 5
             if pipe_width > 10:
                 pipe_width -= 1.5
@@ -96,8 +97,15 @@ def main_loop(points, pipe_gap, pipe_width, clock_ticks):
 
 
 def final_screen(points, highscore):
-    stars.star_movement = [-0.2, -0]
     win.fill(colors.BACKGROUND)
+
+    for star_layer in stars:
+        star_layer.update_and_draw(win)
+        star_layer.star_movement = [
+            star_layer.star_movement[0],
+            0,
+        ]
+
     texts = []
     texts.append(font_big.render(f"Final points: {int(points)}", 5, (255, 255, 255)))
     texts.append(font_big.render(f"Highscore: {int(highscore)}", 5, (255, 255, 255)))
@@ -118,7 +126,11 @@ highscore = 0
 
 clock_ticks = 0
 
-while True:
+run = True
+
+while run:
+    pygame.time.delay(40)
+
     if is_main_loop:
         points, pipe_gap, pipe_width, collided = main_loop(
             points, pipe_gap, pipe_width, clock_ticks
@@ -138,7 +150,7 @@ while True:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            break
+            run = False
 
 
 pygame.quit()
