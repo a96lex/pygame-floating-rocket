@@ -22,10 +22,10 @@ class Stars(pygame.sprite.Sprite):
 
             star += self.star_movement
             if star[0] > self.bounds[0]:
-                star[0] = 0
-            if star[0] < 0:
+                star[0] = 0 - self.size
+            if star[0] < 0 - self.size:
                 star[0] = self.bounds[0]
             if star[1] > self.bounds[1]:
-                star[1] = 0
-            if star[1] < 0:
+                star[1] = 0 - self.size
+            if star[1] < 0 - self.size:
                 star[1] = self.bounds[1]
