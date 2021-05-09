@@ -1,12 +1,35 @@
+import pygame
 from helpers import colors, physics
-from player import Player
-from stars import Stars
-from pipe import Pipe
+from .player import Player
+from .stars import Stars
+from .pipe import Pipe
+
+
+"""
+this is for full screen. However objects need to be adjusted to 
+current screen size which is not supported at the moment
+screen_width, screen_height = (
+    pygame.display.Info().current_w,
+    pygame.display.Info().current_h,
+)
+"""
+pygame.init()
+print(
+    (
+        pygame.display.Info().current_w,
+        pygame.display.Info().current_h,
+    )
+)
+
+screen_width, screen_height = 1080, 720
+
+font = pygame.font.SysFont("ubuntu-mono", 35, True, False)
+font_big = pygame.font.SysFont("ubuntu-mono", 70, True, False)
 
 
 class Game(object):
-    def __init__(self, win):
-        self.win = win
+    def __init__(self):
+        self.win = pygame.display.set_mode((screen_width, screen_height))
 
         self.pipe_gap = 350
         self.pipe_width = 100
@@ -17,7 +40,7 @@ class Game(object):
         for i in range(self.star_layers):
             self.stars.append(
                 Stars(
-                    surface=win,
+                    surface=self.win,
                     star_count=int(1000 / self.star_layers),
                     star_movement=[-(2 + 2 * i / (self.star_layers)), 0],
                     star_size=2 + i * 2 / self.star_layers,
@@ -31,7 +54,7 @@ class Game(object):
         self.points = 0
         self.is_main_loop = True
         self.collided = False
-        self.player = Player(win)
+        self.player = Player(self.win)
         self.pipes = [
             Pipe(surface=self.win, pipe_gap=self.pipe_gap, pipe_width=self.pipe_width)
             for i in range(self.n_pipes)
@@ -62,7 +85,7 @@ class Game(object):
                 if self.pipe_width > 10:
                     self.pipe_width -= 1.5
 
-                pipe.reset(win, self.pipe_gap, self.pipe_width)
+                pipe.reset(self.win, self.pipe_gap, self.pipe_width)
 
         self.points += (pygame.time.get_ticks() - self.clock_ticks) / 100000
 
