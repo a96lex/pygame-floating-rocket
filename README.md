@@ -15,13 +15,7 @@ Source code for the game
 
 Your comments are always welcome. You can add them as [Issues](https://github.com/a96lex/pygame-floating-rocket/issues) and I will have a look
 
-However, if you wish to directly contribute to improve code quality or add features, you can also do so:
-
-- Fork the repository and change anything you want
-- Send me a pull request
-- I will test, review and send you my comments and toughts
-- If changes need to be made, I will require you to, or I can also add them
-- After the pull request is accepted, I will merge it
+However, if you wish to directly contribute to improve code quality or add features, you can also do so by gorking the repository and sending a pull request.
 
 ## Compile to executable
 
